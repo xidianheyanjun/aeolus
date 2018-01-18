@@ -8,28 +8,44 @@ const logger = require('koa-logger')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
+import factory from "./dao/orm/Factory";
+let Datasource = factory.getModel("t_data_source", "aeolus");
+/*Datasource.create({
+ title: "name",
+ ip: "localhost",
+ port: "3306",
+ acc: "root",
+ psw: "root",
+ db_name: "aeolus",
+ create_user:123,
+ create_time:new Date(),
+ status:0
+ });*/
+Datasource.findAll().then((data)=> {
+    console.log(data.length);
+});
 
 // error handler
 onerror(app)
 
 // middlewares
 app.use(bodyparser({
-  enableTypes:['json', 'form', 'text']
+    enableTypes: ['json', 'form', 'text']
 }))
 app.use(json())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
 
 app.use(views(__dirname + '/views', {
-  extension: 'pug'
+    extension: 'ejs'
 }))
 
 // logger
 app.use(async (ctx, next) => {
-  const start = new Date()
-  await next()
-  const ms = new Date() - start
-  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+    const start = new Date()
+    await next()
+    const ms = new Date() - start
+    console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
 // routes
@@ -38,7 +54,7 @@ app.use(users.routes(), users.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
-  console.error('server error', err, ctx)
+    console.error('server error', err, ctx)
 });
 
 module.exports = app

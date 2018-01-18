@@ -1,13 +1,26 @@
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.DS_Store
-dist
-node_modules
+server/npm-debug.log*
+server/yarn-debug.log*
+server/yarn-error.log*
+server/.DS_Store
+server/dist
+server/node_modules
+server/.idea
+
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
+client/.DS_Store
+client/dist
+client/node_modules
+client/.idea
 
 # Editor directories and files
-.idea
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
+server/*.suo
+server/*.ntvs*
+server/*.njsproj
+server/*.sln
+
+client/*.suo
+client/*.ntvs*
+client/*.njsproj
+client/*.sln
