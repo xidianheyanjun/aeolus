@@ -9,6 +9,7 @@ const logger = require('koa-logger')
 const index = require('./routes/index')
 const users = require('./routes/users')
 import factory from "./dao/orm/Factory";
+
 let Datasource = factory.getModel("t_data_source", "aeolus");
 /*Datasource.create({
  title: "name",
@@ -21,7 +22,7 @@ let Datasource = factory.getModel("t_data_source", "aeolus");
  create_time:new Date(),
  status:0
  });*/
-Datasource.findAll().then((data)=> {
+Datasource.findAll().then((data) => {
     console.log(data.length);
 });
 
