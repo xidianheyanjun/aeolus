@@ -17,6 +17,7 @@
     "build:release": "npm run generate:route && npm run generate:vuex && npm run copy:build && node build/build.js"
   },
   "dependencies": {
+    "element-ui": "^2.0.11",
     "es6-promise": "^4.1.0",
     "fastclick": "^1.0.6",
     "vue": "^2.3.3",

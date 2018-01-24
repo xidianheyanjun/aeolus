@@ -1,1 +1,1 @@
-import _home_index from "@/entry/home/index";export default [{path: "/home/index", name:"/home/index", component: _home_index},{path: "/home/index/:id", name:"/home/index/id", component: _home_index}]
+import _home_index from "@/entry/home/index";import _user_home from "@/entry/user/home";export default [{path: "/home/index", name:"/home/index", component: _home_index},{path: "/home/index/:id", name:"/home/index/id", component: _home_index},{path: "/user/home", name:"/user/home", component: _user_home},{path: "/user/home/:id", name:"/user/home/id", component: _user_home}]

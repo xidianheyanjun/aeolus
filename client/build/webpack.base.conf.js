@@ -3,10 +3,7 @@ var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
 
-var webpack = require('webpack');       // mod by xieminghao
-var px2rem = require('postcss-px2rem');       // mod by xieminghao
-
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
@@ -65,19 +62,5 @@ module.exports = {
         }
       }
     ]
-  },
-  /**
-   * add px2rem plugin by xieminghao
-   */
-  
-  plugins:[
-    new webpack.LoaderOptionsPlugin({
-      vue:{
-        postcss: [
-          px2rem({remUnit: 100})
-          // px2rem()
-        ]
-      }
-    })
-  ]
+  }
 }

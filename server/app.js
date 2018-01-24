@@ -22,7 +22,7 @@ let Datasource = datasourceAeolus.getModel("t_data_source");
  create_time:new Date(),
  status:0
  });*/
-Datasource.findAll().then((data)=> {
+Datasource.findAll().then((data) => {
     console.log(data.length);
 });
 
