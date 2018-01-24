@@ -8,8 +8,9 @@ const logger = require('koa-logger')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
-import factory from "./dao/orm/Factory";
-let Datasource = factory.getModel("t_data_source", "aeolus");
+import sequelizeFactory from "./dao/orm/SequelizeFactory";
+let datasourceAeolus = sequelizeFactory.getModelFactory("aeolus");
+let Datasource = datasourceAeolus.getModel("t_data_source");
 /*Datasource.create({
  title: "name",
  ip: "localhost",
