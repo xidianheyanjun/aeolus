@@ -42,7 +42,12 @@ let listFilePath = (path, pathRegular) => {
     return filePaths;
 };
 
+let responseBody = (ctx, data)=> {
+    ctx.body = data;
+};
+
 export default {
     loadData,
-    listFilePath
+    listFilePath,
+    responseBody
 };
