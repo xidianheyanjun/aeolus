@@ -12,17 +12,14 @@ Vue.http.options.emulateJSON = true;
 // option.success:成功回调
 // option.error:失败回调
 Vue.prototype.$sendRequest = (option) => {
-  let method = option["method"] || "get";
+  let method = option["method"] || "post";
   option.params = option.params || {};
   let searchParam = common.parseParam();
   for (let key in searchParam) {
     option.params[key] = searchParam[key];
   }
+  option.params["_t"] = Date.now();
 
-  let cookies = common.getAllValidCookie();
-  for (let key in cookies) {
-    option.params[key] = cookies[key];
-  }
   let params = method != "post" ? {params: option.params} : option.params;
   if (method == "jsonp") {
     params["jsonp"] = option["callback"] || "callback";

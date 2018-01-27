@@ -16,9 +16,9 @@ let datasourceAeolus = sequelizeFactory.getModelFactory("aeolus");
  console.log(data.length);
  });*/
 const router = require("koa-router")();
-router.prefix('/home');
+router.prefix('/home/index');
 
-router.get('/login', async (ctx, next) => {
+router.post('/login', async (ctx, next) => {
     let paramBody = ctx.request.body;
     let acc = paramBody["acc"];
     let psw = paramBody["psw"];

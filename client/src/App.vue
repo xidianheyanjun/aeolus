@@ -1,7 +1,20 @@
 <template>
   <div id="app">
-    <!--<loading v-if="!isRequestCompleted"></loading>-->
-    <router-view></router-view>
+    <el-container v-if="!isHomePagePath">
+      <el-header class="panel-head">
+        <panel-head></panel-head>
+      </el-header>
+      <el-container>
+        <el-aside width="200px">
+          <panel-menu></panel-menu>
+        </el-aside>
+        <el-main>
+          <router-view></router-view>
+        </el-main>
+      </el-container>
+    </el-container>
+
+    <router-view v-if="isHomePagePath"></router-view>
   </div>
 </template>
 
@@ -10,16 +23,31 @@
   import env from '@/config/env';
   import string from '@/util/string';
   import common from "@/util/common";
+  import panelHead from "@/components/head";
+  import panelMenu from "@/components/menu";
   export default {
-    components: {},
+    components: {
+      panelHead,
+      panelMenu
+    },
     computed: mapGetters([]),
     data(){
-      return {};
+      return {
+        isHomePagePath: true
+      };
+    },
+    watch: {
+      "$route": ["init"]
     },
     mounted(){
-      let self = this;
+      this.init();
     },
-    methods: {}
+    methods: {
+      init(){
+        let self = this;
+        self.isHomePagePath = self.$route.name == env.homePagePath;
+      }
+    }
   }
 </script>
 
@@ -87,5 +115,10 @@
 
   input, button, select, textarea {
     outline: none
+  }
+
+  .panel-head {
+    padding: 0;
+    margin: 0;
   }
 </style>
