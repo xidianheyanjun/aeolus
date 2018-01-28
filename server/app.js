@@ -11,6 +11,9 @@ import session from "koa2-cookie-session";
 const homeIndex = require('./routes/home/index');
 const userHome = require('./routes/user/home');
 const userQuery = require('./routes/user/query');
+const userSave = require('./routes/user/save');
+const userUpdate = require('./routes/user/update');
+const userRemove = require('./routes/user/remove');
 
 // error handler
 onerror(app);
@@ -51,6 +54,9 @@ app.use(session({
 app.use(homeIndex.routes(), homeIndex.allowedMethods());
 app.use(userHome.routes(), userHome.allowedMethods());
 app.use(userQuery.routes(), userQuery.allowedMethods());
+app.use(userSave.routes(), userSave.allowedMethods());
+app.use(userUpdate.routes(), userUpdate.allowedMethods());
+app.use(userRemove.routes(), userRemove.allowedMethods());
 
 // error-handling
 app.on('error', (err, ctx) => {

@@ -25,13 +25,14 @@
   import common from "@/util/common";
   import panelHead from "@/components/head";
   import panelMenu from "@/components/menu";
+
   export default {
     components: {
       panelHead,
       panelMenu
     },
     computed: mapGetters([]),
-    data(){
+    data() {
       return {
         isHomePagePath: true
       };
@@ -39,11 +40,11 @@
     watch: {
       "$route": ["init"]
     },
-    mounted(){
+    mounted() {
       this.init();
     },
     methods: {
-      init(){
+      init() {
         let self = this;
         self.isHomePagePath = self.$route.name == env.homePagePath;
       }
@@ -120,5 +121,20 @@
   .panel-head {
     padding: 0;
     margin: 0;
+  }
+
+  .form {
+    margin-top: 20px;
+  }
+
+  .form .row {
+  }
+
+  .form .row .col {
+    width: 30%;
+  }
+
+  .grid {
+    width: 99%;
   }
 </style>

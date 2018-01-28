@@ -29,9 +29,6 @@
         }, {
           index: "/dataset/index",
           label: "数据集管理"
-        }, {
-          index: "/menuset/index",
-          label: "菜单管理"
         }]
       };
     },
@@ -39,7 +36,7 @@
       let self = this;
     },
     methods: {
-      clickLeftMenu(index){
+      clickLeftMenu(index) {
         console.log(index);
         this.$router.push({path: index});
       }

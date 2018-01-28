@@ -7,57 +7,65 @@ let datasourceAeolus = sequelizeFactory.getModelFactory("aeolus");
 let datasourceModel = datasourceAeolus.getModel("t_data_source");
 let datasetModel = datasourceAeolus.getModel("t_db_table");
 const router = require('koa-router')();
-router.prefix('/user/query');
+router.prefix('/user/remove');
 
 router.post('/datasource', async function (ctx, next) {
     let requestBody = ctx.request.body;
-    let biz = requestBody.biz || {};
-    let page = requestBody.page || {};
-    await pageQuery(datasourceModel, page, {
-        status: 1
-    }).then((data) => {
-        commom.responseBody(ctx, {
-            code: "success",
-            msg: "成功",
-            grid: data
-        });
-    }, (err) => {
-        console.log(err);
-    });
-});
-
-router.post('/datasource/:id', async function (ctx, next) {
-    let dataId = ctx.params.id;
-    await datasourceModel.findOne({
-        attributes: ["ip", "port", "acc", "psw", "db_name"],
+    let params = requestBody.removeData || [];
+    let ids = [];
+    for (let m = 0; m < params.length; ++m) {
+        ids.push(params[m].id);
+    }
+    await datasourceModel.update({
+        status: Sequelize.literal("0")
+    }, {
         where: {
-            id: dataId
+            id: {
+                $in: ids
+            }
         }
     }).then((data) => {
+        console.log(data);
         commom.responseBody(ctx, {
             code: "success",
-            msg: "成功",
-            data: data
+            msg: "成功"
         });
     }, (err) => {
         console.log(err);
+        commom.responseBody(ctx, {
+            code: "failure",
+            msg: "失败"
+        });
     });
 });
 
 router.post('/dataset', async function (ctx, next) {
     let requestBody = ctx.request.body;
-    let biz = requestBody.biz || {};
-    let page = requestBody.page || {};
-    await pageQuery(datasetModel, page, {
-        status: 1
+    let params = requestBody.removeData || [];
+    let ids = [];
+    for (let m = 0; m < params.length; ++m) {
+        ids.push(params[m].id);
+    }
+    await datasetModel.update({
+        status: Sequelize.literal("0")
+    }, {
+        where: {
+            id: {
+                $in: ids
+            }
+        }
     }).then((data) => {
+        console.log(data);
         commom.responseBody(ctx, {
             code: "success",
-            msg: "成功",
-            grid: data
+            msg: "成功"
         });
     }, (err) => {
         console.log(err);
+        commom.responseBody(ctx, {
+            code: "failure",
+            msg: "失败"
+        });
     });
 });
 

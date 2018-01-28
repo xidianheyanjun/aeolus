@@ -37,8 +37,8 @@
     },
     data() {
       return {
-        id: "",
-        params(){
+        module: "",
+        params() {
           return {};
         },
         gridColModel: [],
@@ -55,7 +55,7 @@
     },
     mounted() {
       let self = this;
-      self.id = self.gridOption.id;
+      self.module = self.gridOption.module;
       self.params = self.gridOption.params || self.params;
       self.gridColModel = self.gridOption.gridColModel;
       self.gridData = self.gridOption.gridData;
@@ -72,9 +72,9 @@
           no: self.page.no
         };
         self.$sendRequest({
-          url: string.format(env.resource.pageQuery, {id: self.id}),
+          url: string.format(env.resource.pageQuery, {module: self.module}),
           params: params
-        }).then((data)=> {
+        }).then((data) => {
           if (data.code != "success") {
             self.$message(data.msg);
             return false;
@@ -84,13 +84,13 @@
           self.page.totalPage = data.grid.page.totalPage;
           self.page.totalNum = data.grid.page.totalNum;
           self.page.no = data.grid.page.no;
-        }, (err)=> {
+        }, (err) => {
           console.log("grid query", err);
         });
       },
       create() {
         let self = this;
-        self.$router.push({path: "/" + self.id + "/create"});
+        self.$router.push({path: "/" + self.module + "/edit"});
       },
       update() {
         let self = this;
@@ -98,20 +98,28 @@
           self.$message("请选择一行");
           return false;
         }
-        self.$router.push({path: "/" + self.id + "/update", query: self.multipleSelection[0]});
+        self.$router.push({path: "/" + self.module + "/edit", query: {id: self.multipleSelection[0].id}});
       },
       remove() {
         let self = this;
+        console.log(self.multipleSelection);
+        if (self.multipleSelection.length < 1) {
+          self.$message("请选择一行");
+          return false;
+        }
         self.$sendRequest({
-          url: string.format(env.resource.gridRemove, {id: self.id}),
-          params: self.params()
-        }).then((data)=> {
+          url: string.format(env.resource.gridRemove, {module: self.module}),
+          params: {
+            removeData: self.multipleSelection
+          }
+        }).then((data) => {
           if (data.code != "success") {
             self.$message(data.msg);
             return false;
           }
+          self.$message("删除成功");
           self.query(self.page.no);
-        }, (err)=> {
+        }, (err) => {
           console.log("grid query", err);
         });
       },
