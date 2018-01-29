@@ -6,6 +6,7 @@ import sequelizeFactory from "../../dao/orm/SequelizeFactory";
 let datasourceAeolus = sequelizeFactory.getModelFactory("aeolus");
 let datasourceModel = datasourceAeolus.getModel("t_data_source");
 let datasetModel = datasourceAeolus.getModel("t_db_table");
+let columnModel = datasourceAeolus.getModel("t_db_column");
 const router = require('koa-router')();
 router.prefix('/user/query');
 
@@ -58,6 +59,50 @@ router.post('/dataset', async function (ctx, next) {
         });
     }, (err) => {
         console.log(err);
+    });
+});
+
+router.post('/queryDatasource', async function (ctx, next) {
+    let dsList = await datasourceModel.findAll({
+        attributes: ["id", "db_name"]
+    });
+    commom.responseBody(ctx, {
+        code: "success",
+        msg: "成功",
+        dsList: dsList
+    });
+});
+
+router.post('/dataset/:id', async function (ctx, next) {
+    let dataId = ctx.params.id;
+    let dataset = await datasetModel.findOne({
+        attributes: ["ds_id", "title", "name"],
+        where: {
+            id: dataId,
+            status: 1
+        }
+    });
+    if (dataset.length == 0) {
+        commom.responseBody(ctx, {
+            code: "failure",
+            msg: "无效的数据集"
+        });
+        return false;
+    }
+    let dataColumns = await columnModel.findAll({
+        attributes: ["dt_id", "code", "name", "kind", "default_option"],
+        where: {
+            dt_id: dataId
+        },
+        order: [
+            ["id"]
+        ]
+    });
+    commom.responseBody(ctx, {
+        code: "success",
+        msg: "成功",
+        dataset: dataset.dataValues,
+        colList: dataColumns
     });
 });
 

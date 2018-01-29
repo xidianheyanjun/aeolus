@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-menu default-active="1" @select="clickLeftMenu" theme="dark" background-color="#545c64"
-             text-color="#fff" active-text-color="#ffd04b" :style="{height: menuHeight + 'px'}">
+             text-color="#fff" active-text-color="#ffd04b" class="left-menu">
       <el-menu-item v-for="menu in leftMenu" :key="menu.label" :index="menu.index">{{menu.label}}
       </el-menu-item>
     </el-menu>
@@ -19,7 +19,6 @@
     computed: mapGetters([]),
     data() {
       return {
-        menuHeight: document.documentElement.clientHeight - 60,
         leftMenu: [{
           index: "/user/home",
           label: "主页"
@@ -46,4 +45,12 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .left-menu {
+    display: inline-block;
+    width: 200px;
+    position: fixed;
+    left: 0;
+    top: 60px;
+    bottom: 0;
+  }
 </style>

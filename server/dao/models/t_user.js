@@ -5,7 +5,8 @@ module.exports = {
     cols: {
         id: {
             type: Sequelize.INTEGER(11),
-            primaryKey: true
+            primaryKey: true,
+            autoIncrement: true
         },
         acc: Sequelize.STRING(128),
         psw: Sequelize.STRING(128),
